@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-import uuid
 
 
 class Genre(models.Model):
@@ -29,8 +28,10 @@ class Book(models.Model):
 		# This creates a string for genre. This is required to display genre in Admin	
 		return ', '.join([genre.name for genre in self.genre.all()[:3]])
 
-	display_genre.short_description = 'Genre'		
+	display_genre.short_description = 'Genre'	
 
+
+import uuid # Required for unique book instances
 
 class BookInstance(models.Model):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for the particular book across the entire library')

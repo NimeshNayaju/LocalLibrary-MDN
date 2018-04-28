@@ -8,6 +8,12 @@ class Genre(models.Model):
 	def __str__(self):
 		return self.name
 
+class Language(models.Model):
+	name = models.CharField(max_length=200, help_text="Enter the book's natural language")		
+
+	def __str__(self):
+		return self.name
+
 
 class Book(models.Model):
 	title = models.CharField(max_length=200)		
@@ -16,13 +22,14 @@ class Book(models.Model):
 	summary = models.TextField(max_length=1000, help_text='Enter a brief descrption of the book')
 	isbn = models.CharField('ISBN', max_length=13, help_text='13 Character ISBN Number')
 	genre = models.ManyToManyField(Genre, help_text='Select a genre for this book')
+	language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True)
 	# Genre has been defined so we can specify the object
 
 	def __str__(self):
 		return self.title
 
 	def get_absolute_url(self):
-		return reverse('book-detail', args=[str(self.id)])	
+		return reverse('catalog:book-detail', kwargs={'pk':self.pk})
 
 	def display_genre(self):
 		# This creates a string for genre. This is required to display genre in Admin	
@@ -65,7 +72,7 @@ class Author(models.Model):
 		ordering = ['last_name', 'first_name']
 
 	def get_absolute_url(self):
-		return reverse('author-detail', args=[str(self.id)])	
+		return reverse('catalog:author-detail', args=[str(self.id)])	
 
 	def __str__(self):
 		return '{0}, {1}'.format(self.last_name,self.first_name)	

@@ -12,5 +12,8 @@ urlpatterns = [
 	# Author List and Details Page
 	url(r'^authors/$', views.AuthorListView.as_view(), name='authors'),
 	url(r'^authors/(?P<pk>[0-9]+)/$', views.AuthorDetailView.as_view(), name='author-detail'),	
+
+	# loaned books
+	url(r'^mybooks/$', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
 ]
 
